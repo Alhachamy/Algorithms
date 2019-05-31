@@ -4,12 +4,11 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
+#include <limits.h>
 
 // size of the array and sentinel value
-#define SIZE 1000
-// make sure it's bigger than max value in the array
-#define SENTINEL 10000
-// prototypes
+#define SIZE 100
+
 void print(int a[]);
 void merge(int a[], int begin, int mid, int end);
 void mergeSort(int a[], int begin, int end);
@@ -21,13 +20,13 @@ int main() {
     int array[SIZE];
     // populate the array with random integers
     for(size_t i = 0; i < SIZE; i++) {
-        array[i] = 1 + (rand() % 1000);
+        array[i] = 1 + (rand() % 500);
     }
     //print unsorted array
     printf("Unsorted Array: \n=============\n");
     print(array);
     // call mergeSort function, pass it the array and its properties
-    mergeSort(array,0, SIZE);
+    mergeSort(array,0, SIZE-1);
     // print sorted array
     printf("Unsorted Array: \n=============\n");
     print(array);
@@ -57,22 +56,22 @@ void merge(int a[], int begin, int mid, int end){
     int right[n2+1];
     // iterate through the new left array and populate it
     for(int i = 0; i < n1; i++){
-        left[i] = a[begin + i - 1];
+        left[i] = a[begin + i];
     }
     // iterate through the new right array and populate it
     for(int j = 0; j < n2; j++){
-        right[j] = a[mid+j];
+        right[j] = a[mid+j+1];
     }
 
     // Set the sentinel value
-    left[n1] = SENTINEL;
-    right[n2] = SENTINEL;
+    left[n1] = INT_MAX;
+    right[n2] = INT_MAX;
     // setting new indices
     int i = 0;
     int j = 0;
     // compare the values in the sub arrays and send them to
     // the initial output array
-    for(int k = begin - 1; k < end; k++){
+    for(int k = begin; k <= end; k++){
         if(left[i] <= right[j]){
             a[k] = left[i];
             i++;
