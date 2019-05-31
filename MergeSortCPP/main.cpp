@@ -1,12 +1,12 @@
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
-// prototypes
+#include <climits>
+
+
 void merge(int a[], int begin, int mid, int end);
 void mergeSort(int a[], int begin, int end);
 void printArray(int a[], int s);
-// sentinel value should always be higher than highest array element
-const int SENTINEL = 1000000;
 
 int main() {
     // init array and its size
@@ -15,8 +15,8 @@ int main() {
     // random time seed
     srand(time(0));
     // populate array
-    for(int i = 0; i < SIZE; i++){
-        array[i] = 1 + (rand() % 1000);
+    for(int i = 0; i < SIZE-1; i++){
+        array[i] = 1 + (rand() % 600);
     }
     // print unsorted array
     std::cout << "Unsorted Array\n=================" << std::endl;
@@ -31,37 +31,39 @@ int main() {
     return 0;
 }
 
-// Brief: merge subroutine
-// Param: integer array "a[]"
-//        array properties
-//        "begin" integer starting point of the array which is 0
-//        "mid" integer halfway point of the array which is size/2
-//        "end" integer endpoint of array which is the array size
-// Return: void
+/**
+ * @brief merge subroutine
+ * @param a , the array itself
+ * @param begin , the beginning of the array
+ * @param mid , the midpoint of the array
+ * @param end , the end of the array
+ * @return void
+ */
+
 void merge(int a[], int begin, int mid, int end){
     // set subarray sizes
     int n1 = mid-begin + 1;
     int n2 = end-mid;
     // init new arrays
-    int left[n1 + 1];
-    int right[n2 + 1];
+    int left[n1+1];
+    int right[n2+1];
     // populate left array
     for(int i = 0; i < n1; i++){
-        left[i] = a[begin+i-1];
+        left[i] = a[begin+i];
     }
     // populate right array
     for(int j = 0; j < n2; j++){
-        right[j] = a[mid+j];
+        right[j] = a[mid+j+1];
     }
     // set sentinal values
-    left[n1] = SENTINEL;
-    right[n2] = SENTINEL;
+    left[n1] = INT_MAX;
+    right[n2] = INT_MAX;
     // new indicies
     int i = 0;
     int j = 0;
     // push values to the output array
-    for(int k = begin - 1; k < end; k++){
-        if(left[i] <= right[j]){
+    for(int k = begin; k <= end; k++){
+        if(left[i] < right[j]){
             a[k] = left[i];
             i++;
         }
@@ -73,10 +75,14 @@ void merge(int a[], int begin, int mid, int end){
 
 }
 
-// Brief: recursive mergeSort function
-// Param: integer array "a[]"
-//        integer "begin" , starting point (0)
-//        integer "end" , ending point (array size)
+/**
+ * @brief recursive mergeSort function
+ * @param a , the array
+ * @param begin , beginning of the array
+ * @param end , ending of the array, which is array size
+ * @return void
+ */
+
 void mergeSort(int a[], int begin, int end) {
     // init mid
     int mid = 0;
@@ -91,7 +97,11 @@ void mergeSort(int a[], int begin, int end) {
         merge(a, begin, mid, end);
     }
 }
-// Function that simply prints array
+/**
+ * @brief prints array
+ * @param a , array
+ * @param s , size
+ */
 void printArray(int a[], int s){
 
     for(int i = 0; i < s; i++){
