@@ -3,7 +3,6 @@
 #include <cstdlib>
 #include <climits>
 
-
 void merge(int a[], int begin, int mid, int end);
 void mergeSort(int a[], int begin, int end);
 void printArray(int a[], int s);
