@@ -41,7 +41,7 @@ public class Main {
         System.out.println("The peak is: " + findPeak(matrix,ROW,COL,(COL/2)));
     }
 
-    /***
+    /**
      * @brief store the maximum value in a row and return its index
      *        element in the matrix
      * @param a, the matrix
